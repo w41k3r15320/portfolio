@@ -1,5 +1,5 @@
 "use client";
-
+import { withBasePath } from "@/lib/base-path";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -71,11 +71,11 @@ export function ProjectView({ project }: { project: Project }) {
                     controls
                     playsInline
                     preload="metadata"
-                    poster={video.poster}
+                    poster={video.poster ? withBasePath(video.poster) : undefined}
                     aria-label={video.alt}
                     style={{ aspectRatio: `${video.width} / ${video.height}` }}
                   >
-                    <source src={video.src} type="video/mp4" />
+                    <source src={withBasePath(video.src)} type="video/mp4" />
                   </video>
                 </div>
               ) : null}
@@ -95,13 +95,13 @@ export function ProjectView({ project }: { project: Project }) {
                       }
                     >
                       <Image
-                        src={item.src}
-                        alt={item.alt}
-                        width={item.width}
-                        height={item.height}
-                        loading="lazy"
-                        sizes={imageSizes(item, items.length)}
-                      />
+  src={withBasePath(item.src)}
+  alt={item.alt}
+  width={item.width}
+  height={item.height}
+  loading="lazy"
+  sizes={imageSizes(item, items.length)}
+/>
                     </div>
                   ))}
                 </div>
@@ -111,10 +111,10 @@ export function ProjectView({ project }: { project: Project }) {
 
           <footer className="dang-project-footer">
             <img
-              className="dang-project-footer__logo"
-              src="/sites/dang/logos/thd-white.svg"
-              alt="Dang (thd) logo"
-            />
+  className="dang-project-footer__logo"
+  src={withBasePath("/sites/dang/logos/thd-white.svg")}
+  alt="Dang (thd) logo"
+/>
             <p className="dang-project-footer__copyright">
               © 2026 Dang, Tran Huy Dang
             </p>

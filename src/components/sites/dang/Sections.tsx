@@ -1,5 +1,5 @@
 "use client";
-
+import { withBasePath } from "@/lib/base-path";
 import { contact, marqueeWords } from "./site";
 
 export function About() {
@@ -41,7 +41,7 @@ export function About() {
         </section>
         <div className="logo-small-container">
           <img
-            src="/sites/dang/logos/thd-white.svg"
+            src={withBasePath("/sites/dang/logos/thd-white.svg")}
             className="logo-small-img logo-static"
             alt="Dang (thd) logo"
           />
@@ -61,7 +61,7 @@ export function Contact() {
       <div className="logo-full-container">
         <div className="logo-full-layer">
           <img
-            src="/sites/dang/logos/thd-white.svg"
+            src={withBasePath("/sites/dang/logos/thd-white.svg")}
             className="logo-full-img dang-contact__logo"
             alt="Dang (thd) logo"
           />

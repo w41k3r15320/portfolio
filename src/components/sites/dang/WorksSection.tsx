@@ -1,5 +1,5 @@
 "use client";
-
+import { withBasePath } from "@/lib/base-path";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { projects, type Project } from "./projects";
@@ -87,13 +87,13 @@ function WorkCard({ project }: { project: Project }) {
         ))}
       </span>
       <img
-        className="js-home-work-media homepage__work--media"
-        src={project.banner}
-        alt={`${project.title} banner`}
-        width={project.bannerWidth}
-        height={project.bannerHeight}
-        loading="lazy"
-      />
+  className="js-home-work-media homepage__work--media"
+  src={withBasePath(project.banner)}
+  alt={`${project.title} banner`}
+  width={project.bannerWidth}
+  height={project.bannerHeight}
+  loading="lazy"
+/>
     </Link>
   );
 }
