@@ -47,3 +47,7 @@ next-env.d.ts
 
 # Local temp files
 temp/
+
+.new-portfolio/
+new-portfolio-instructions.md
+new-portfolio-additional-instructions.md
