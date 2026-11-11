@@ -32,10 +32,10 @@ export function About() {
           <section className="homepage__what-text">
             {/* TODO(Dang): personalise this bio. */}
             <p>
-              Hi, my name is Trần Huy Đăng. I'm a graphic designer, video editor and motion graphic artist with experience creating visual content for clients, school clubs, YouTube channels, music videos, documentary or even some short film projects. I specialize in video editing and graphic design using DaVinci Resolve and Affinity.
+              Hi, my name is Trần Huy Đăng. I&apos;m a graphic designer, video editor and motion graphic artist with experience creating visual content for clients, school clubs, YouTube channels, music videos, documentary or even some short film projects. I specialize in video editing and graphic design using DaVinci Resolve and Affinity.
             </p>
             <p>
-              Alongside my design work, I'm actively learning into software development with the goal of becoming a developer. 
+              Alongside my design work, I&apos;m actively learning into software development with the goal of becoming a developer. 
             </p>
           </section>
         </section>
