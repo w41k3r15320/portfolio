@@ -6,7 +6,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -25,28 +24,50 @@ export function usePageTransition() {
   return useContext(PageTransitionContext);
 }
 
-export function PageTransitionProvider({ children }: { children: ReactNode }) {
-  const router = useRouter();
-  const pathname = usePathname();
+function FadeOverlay() {
   const [opaque, setOpaque] = useState(true);
   const [active, setActive] = useState(true);
-  const navigatingRef = useRef(false);
-  const prevPathRef = useRef(pathname);
 
   useEffect(() => {
-    prevPathRef.current = pathname;
-    navigatingRef.current = false;
-    setActive(true);
-    setOpaque(true);
     const id = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setOpaque(false));
+      requestAnimationFrame(() => {
+        setOpaque(false);
+      });
     });
     const timeout = window.setTimeout(() => setActive(false), 1000);
     return () => {
       cancelAnimationFrame(id);
       window.clearTimeout(timeout);
     };
-  }, [pathname]);
+  }, []);
+
+  if (!active) return null;
+
+  return (
+    <div
+      aria-hidden="true"
+      className="dang-page-fade"
+      style={{ opacity: opaque ? 1 : 0 }}
+    />
+  );
+}
+
+export function PageTransitionProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [navigating, setNavigating] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    if (!navigating) return;
+    // when navigation completes, pathname changes and FadeOverlay remounts;
+    // clear local navigating state shortly after
+    const timeout = window.setTimeout(() => {
+      setNavigating(false);
+      setFadeOut(false);
+    }, 1200);
+    return () => window.clearTimeout(timeout);
+  }, [navigating, pathname]);
 
   const prefetch = useCallback(
     (href: string) => {
@@ -61,30 +82,29 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
 
   const navigate = useCallback(
     (href: string) => {
-      if (navigatingRef.current) return;
-      navigatingRef.current = true;
+      if (navigating) return;
+      setNavigating(true);
       router.prefetch(href);
-      setActive(true);
-      // ensure we start from transparent->opaque for a smooth fade-out
-      setOpaque(false);
+      // start fade-out on next frames
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => setOpaque(true));
+        requestAnimationFrame(() => setFadeOut(true));
       });
       window.setTimeout(() => {
         router.push(href);
       }, 1000);
     },
-    [router],
+    [navigating, router],
   );
 
   return (
     <PageTransitionContext.Provider value={{ navigate, prefetch }}>
       {children}
-      {active ? (
+      <FadeOverlay key={pathname} />
+      {navigating ? (
         <div
           aria-hidden="true"
           className="dang-page-fade"
-          style={{ opacity: opaque ? 1 : 0 }}
+          style={{ opacity: fadeOut ? 1 : 0 }}
         />
       ) : null}
     </PageTransitionContext.Provider>
