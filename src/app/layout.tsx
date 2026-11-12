@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import "./globals.css";
 import "./dang.css";
+import { PageTransitionProvider } from "@/components/sites/dang/PageTransition";
 
 const archivo = Archivo({
   subsets: ["latin", "vietnamese"],
@@ -47,7 +48,9 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <PageTransitionProvider>{children}</PageTransitionProvider>
+      </body>
     </html>
   );
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SiteMenu } from "./Chrome";
+import { usePageTransition } from "./PageTransition";
 import { getImageRows, getVideo, type Project, type ProjectMedia } from "./projects";
 
 function imageSizes(item: ProjectMedia, rowLength: number): string {
@@ -18,6 +19,7 @@ export function ProjectView({ project }: { project: Project }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const video = getVideo(project);
   const rows = getImageRows(project);
+  const { navigate, prefetch } = usePageTransition();
 
   useEffect(() => {
     document.body.classList.toggle("nav-open", menuOpen);
@@ -35,7 +37,26 @@ export function ProjectView({ project }: { project: Project }) {
 
       <main id="swup" className="main swup-in is-shown">
         <article className="project dang-project">
-          <Link className="dang-project-back" href="/#works" aria-label="All works">
+          <Link
+            className="dang-project-back"
+            href="/#works"
+            aria-label="All works"
+            onMouseEnter={() => prefetch("/#works")}
+            onFocus={() => prefetch("/")}
+            onClick={(event) => {
+              if (
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey ||
+                event.button !== 0
+              ) {
+                return;
+              }
+              event.preventDefault();
+              navigate("/#works");
+            }}
+          >
             All works
           </Link>
 

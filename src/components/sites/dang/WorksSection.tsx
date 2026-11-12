@@ -2,6 +2,7 @@
 import { withBasePath } from "@/lib/base-path";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { usePageTransition } from "./PageTransition";
 import { projects, type Project } from "./projects";
 
 export function WorksSection() {
@@ -35,6 +36,7 @@ export function WorksSection() {
 function WorkCard({ project }: { project: Project }) {
   const ref = useRef<HTMLAnchorElement | null>(null);
   const [visible, setVisible] = useState(false);
+  const { navigate, prefetch } = usePageTransition();
 
   useEffect(() => {
     const element = ref.current;
@@ -75,6 +77,21 @@ function WorkCard({ project }: { project: Project }) {
       }${visible ? " visible" : ""}`}
       data-title={project.title}
       data-magnet
+      onMouseEnter={() => prefetch(`/works/${project.slug}`)}
+      onFocus={() => prefetch(`/works/${project.slug}`)}
+      onClick={(event) => {
+        if (
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          event.button !== 0
+        ) {
+          return;
+        }
+        event.preventDefault();
+        navigate(`/works/${project.slug}`);
+      }}
     >
       <section className="homepage__work-container">
         <p className="homepage__work-link">{project.title}</p>

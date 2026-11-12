@@ -150,3 +150,7 @@ html[data-theme="dark"] .dang-project-footer{background-color:#050608;color:var(
 html[data-theme="dark"] .dang-menu-backdrop{background-color:#050608}
 html[data-theme="dark"] .menu-toggle--site .menu-toggle-bar,
 html[data-theme="dark"] .menu-toggle--site.is-on-light .menu-toggle-bar{background-color:#f3f2f0}
+
+/* Simple page fade transition */
+.dang-page-fade{position:fixed;inset:0;z-index:9999;background:#f7f2e7;pointer-events:none;transition:opacity 1s ease}
+html[data-theme="dark"] .dang-page-fade{background:#0d0f14}
