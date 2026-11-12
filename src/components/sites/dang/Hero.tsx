@@ -117,7 +117,8 @@ export function Hero({
               className={`homepage__title-variant${
                 index === titleIndex ? " is-current" : ""
               }`}
-              aria-hidden="true"
+              aria-hidden={index !== titleIndex}
+              hidden={index !== titleIndex}
             >
               {title.content}
             </span>
