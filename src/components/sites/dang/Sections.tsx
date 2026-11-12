@@ -39,13 +39,13 @@ export function About() {
             </p>
           </section>
         </section>
-        <div className="logo-small-container">
+        {/* <div className="logo-small-container">
           <img
             src={withBasePath("/sites/dang/logos/thd-white.svg")}
             className="logo-small-img logo-static"
             alt="Dang (thd) logo"
           />
-        </div>
+        </div> */}
       </section>
     </section>
   );
