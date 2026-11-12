@@ -87,12 +87,14 @@ body.nav-open{overflow:hidden}
 }
 
 /* Hero titles: prevent stacked variants and descender/glyph overlap */
-.homepage__title-variant:not(.is-current):not(.is-out){visibility:hidden;opacity:0}
+.homepage__title-variant{overflow:visible}
 .homepage__main-title,
-.homepage__title-variant{line-height:.9;overflow:visible}
+.homepage__title-variant{line-height:.9}
 .homepage__title-variant{gap:.04em}
 .art-director-title,
 .photographer-title{line-height:.9;overflow:visible;padding-bottom:.06em}
+.homepage__main-title.is-scrambling .art-director-title,
+.homepage__main-title.is-scrambling .photographer-title{font-variant-numeric:tabular-nums}
 
 /* ===== Follow-up refinements ===== */
 :root{--dang-red-label-inset:1.2rem}

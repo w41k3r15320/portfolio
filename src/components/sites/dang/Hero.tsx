@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AbstractThin } from "./Marks";
 import { descriptionSlides, navLinks } from "./site";
 import { ThemeToggle } from "./ThemeToggle";
@@ -15,32 +15,36 @@ type HeroProps = {
 const titles = [
   {
     label: "graphic designer",
-    content: (
-      <>
-        <span className="art-director-title">graphic</span>
-        <span className="photographer-title">designer</span>
-      </>
-    ),
+    lines: ["graphic", "designer"],
   },
   {
     label: "filmmaker",
-    content: (
-      <>
-        <span className="art-director-title">video</span>
-        <span className="photographer-title">editor</span>
-      </>
-    ),
+    lines: ["video", "editor"],
   },
   {
     label: "motion graphics",
-    content: (
-      <>
-        <span className="art-director-title">mograph</span>
-        <span className="photographer-title">artist</span>
-      </>
-    ),
+    lines: ["mograph", "artist"],
   },
-];
+] as const;
+
+const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*<>?/";
+
+function randomChar() {
+  return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+}
+
+function makeOrder(length: number) {
+  const order = Array.from({ length }, (_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  const rank = Array<number>(length).fill(0);
+  order.forEach((charIndex, revealStep) => {
+    rank[charIndex] = revealStep;
+  });
+  return rank;
+}
 
 export function Hero({
   onScrollTo,
@@ -49,18 +53,72 @@ export function Hero({
   descriptionRef,
 }: HeroProps) {
   const [titleIndex, setTitleIndex] = useState(0);
+  const [displayLines, setDisplayLines] = useState<string[]>([
+    ...titles[0].lines,
+  ]);
+  const [scrambling, setScrambling] = useState(false);
   const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setTitleIndex((index) => (index + 1) % titles.length);
-    }, 5000);
-    return () => window.clearInterval(timer);
-  }, []);
+  const scrambleTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const id = window.requestAnimationFrame(() => setInView(true));
     return () => window.cancelAnimationFrame(id);
+  }, []);
+
+  useEffect(() => {
+    const scrambleTo = (nextIndex: number) => {
+      if (scrambleTimerRef.current) {
+        window.clearInterval(scrambleTimerRef.current);
+      }
+      const targetLines = titles[nextIndex].lines.map((l) => l);
+      const ranks = targetLines.map((line) => makeOrder(line.length));
+      const maxLen = Math.max(...targetLines.map((l) => l.length));
+      let iteration = 0;
+      setScrambling(true);
+
+      scrambleTimerRef.current = window.setInterval(() => {
+        setDisplayLines(
+          targetLines.map((target, lineIndex) =>
+            target
+              .split("")
+              .map((char, charIndex) => {
+                if (char === " ") return " ";
+                if (iteration > (ranks[lineIndex][charIndex] ?? 0)) {
+                  return target[charIndex];
+                }
+                return randomChar();
+              })
+              .join(""),
+          ),
+        );
+
+        iteration += 1 / 2;
+        if (iteration > maxLen + 1) {
+          if (scrambleTimerRef.current) {
+            window.clearInterval(scrambleTimerRef.current);
+            scrambleTimerRef.current = null;
+          }
+          setDisplayLines([...targetLines]);
+          setTitleIndex(nextIndex);
+          setScrambling(false);
+        }
+      }, 30);
+    };
+
+    const timer = window.setInterval(() => {
+      setTitleIndex((index) => {
+        const next = (index + 1) % titles.length;
+        scrambleTo(next);
+        return index;
+      });
+    }, 5000);
+
+    return () => {
+      window.clearInterval(timer);
+      if (scrambleTimerRef.current) {
+        window.clearInterval(scrambleTimerRef.current);
+      }
+    };
   }, []);
 
   const handleDescriptionScroll = () => {
@@ -110,19 +168,14 @@ export function Hero({
           <span>I am Dang.</span>
         </section>
 
-        <h1 className="homepage__main-title" aria-label={titles[titleIndex].label}>
-          {titles.map((title, index) => (
-            <span
-              key={title.label}
-              className={`homepage__title-variant${
-                index === titleIndex ? " is-current" : ""
-              }`}
-              aria-hidden={index !== titleIndex}
-              hidden={index !== titleIndex}
-            >
-              {title.content}
-            </span>
-          ))}
+        <h1
+          className={`homepage__main-title${scrambling ? " is-scrambling" : ""}`}
+          aria-label={titles[titleIndex].label}
+        >
+          <span className="homepage__title-variant is-current" aria-hidden="true">
+            <span className="art-director-title">{displayLines[0]}</span>
+            <span className="photographer-title">{displayLines[1]}</span>
+          </span>
         </h1>
 
         <section className="homepage__description-dang dang-hero__description">
