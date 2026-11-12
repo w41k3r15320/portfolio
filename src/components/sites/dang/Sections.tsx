@@ -85,7 +85,7 @@ export function Contact() {
       <a href={`mailto:${contact.email}`} className="homepage__talk-link">
         {contact.email}
       </a>
-      <p className="dang-contact__copyright">© 2026 Tran Huy Dang</p>
+      <p className="dang-contact__copyright">2026 Tran Huy Dang</p>
     </section>
   );
 }

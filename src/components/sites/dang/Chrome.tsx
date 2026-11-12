@@ -4,6 +4,7 @@ import { withBasePath } from "@/lib/base-path";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AbstractThin } from "./Marks";
 import { menuLinks } from "./site";
+import { ThemeToggle } from "./ThemeToggle";
 
 type SiteMenuProps = {
   open: boolean;
@@ -109,21 +110,27 @@ export function SiteMenu({
               key={anchor}
             >
               <a
-  className="menu-link"
-  href={variant === "home" ? anchor : withBasePath(`/${anchor}`)}
-  data-title={title}
-  data-underline
-  onClick={(event) => {
-    if (variant !== "home") return;
-    event.preventDefault();
-    onOpenChange(false);
-    window.setTimeout(() => onScrollTo(anchor), 80);
-  }}
->
-  {label}
-</a>
+                className="menu-link"
+                href={variant === "home" ? anchor : withBasePath(`/${anchor}`)}
+                data-title={title}
+                data-underline
+                onClick={(event) => {
+                  if (variant !== "home") return;
+                  event.preventDefault();
+                  onOpenChange(false);
+                  window.setTimeout(() => onScrollTo(anchor), 80);
+                }}
+              >
+                {label}
+              </a>
             </li>
           ))}
+          <li
+            className="menu-li"
+            style={{ "--i": menuLinks.length } as React.CSSProperties}
+          >
+            <ThemeToggle className="menu-link dang-theme-toggle" />
+          </li>
         </ul>
       </nav>
     </>

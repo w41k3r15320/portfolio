@@ -28,7 +28,7 @@ function applyTheme(theme: Theme) {
   window.dispatchEvent(new Event(THEME_EVENT));
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({ className = "homepage__nav-link dang-theme-toggle" }: { className?: string }) {
   const theme = useSyncExternalStore(subscribe, readTheme, getServerSnapshot);
 
   const toggle = useCallback(() => {
@@ -44,7 +44,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className="homepage__nav-link dang-theme-toggle"
+      className={className}
       aria-label="Dark theme"
       aria-pressed={theme === "dark"}
       onClick={toggle}
