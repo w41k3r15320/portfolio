@@ -34,7 +34,7 @@ export const projects: Project[] = [
     bannerWidth: 1920,
     bannerHeight: 960,
     disciplines: ["Video Editing", "Motion Graphics"],
-    description: "My 2025 video editing and motion graphics showreel", // TODO: write the project description in projects.ts
+    description: "My 2025 video editing and motion graphics showreel.", // TODO: write the project description in projects.ts
     media: [
       {
         kind: "video",
@@ -200,7 +200,7 @@ export const projects: Project[] = [
     bannerWidth: 2000,
     bannerHeight: 1000,
     disciplines: ["Graphic Design", "Motion Graphics"],
-    description: "Visual identity for Vinschool Music Club (GEN 10)", // TODO(Dang): write the project description in projects.ts
+    description: "Visual identity for Vinschool Music Club (GEN 10).", // TODO(Dang): write the project description in projects.ts
     media: [
       {
         kind: "video",
