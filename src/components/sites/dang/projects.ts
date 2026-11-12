@@ -38,7 +38,7 @@ export const projects: Project[] = [
     media: [
       {
         kind: "video",
-        src: "/sites/dang/projects/2025-showreel/video.mp4",
+        src: "/sites/dang/projects/2025-showreel/output.webm",
         width: 1920,
         height: 1080,
         poster: "/sites/dang/projects/2025-showreel/banner.webp",
@@ -57,7 +57,7 @@ export const projects: Project[] = [
     media: [
       {
         kind: "video",
-        src: "/sites/dang/projects/greenwich-it-club/video.mp4",
+        src: "/sites/dang/projects/greenwich-it-club/output.webm",
         width: 1440,
         height: 1080,
         poster: "/sites/dang/projects/greenwich-it-club/banner.webp",
