@@ -34,7 +34,7 @@ export const projects: Project[] = [
     bannerWidth: 1920,
     bannerHeight: 960,
     disciplines: ["Video Editing", "Motion Graphics"],
-    description: "My 2025 video editing and motion graphics showreel", // TODO(Dang): write the project description in projects.ts
+    description: "My 2025 video editing and motion graphics showreel", // TODO: write the project description in projects.ts
     media: [
       {
         kind: "video",
@@ -204,7 +204,7 @@ export const projects: Project[] = [
     media: [
       {
         kind: "video",
-        src: "/sites/dang/projects/vinschool-music-club/video.mp4",
+        src: "/sites/dang/projects/vinschool-music-club/output.webm",
         width: 1536,
         height: 1920,
         poster: "/sites/dang/projects/vinschool-music-club/banner.webp",
