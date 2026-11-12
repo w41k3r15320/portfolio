@@ -117,7 +117,7 @@ export const projects: Project[] = [
     bannerWidth: 2000,
     bannerHeight: 1000,
     disciplines: ["Graphic Design"],
-    description: "Personal projects. Widescreen posters I made in my free time or to practice.", // TODO(Dang): write the project description in projects.ts
+    description: "Personal projects. Various posters I made in my free time or to practice.", // TODO(Dang): write the project description in projects.ts
     media: [
       {
         kind: "image",
