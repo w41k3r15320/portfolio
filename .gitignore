@@ -55,3 +55,7 @@ new-portfolio-additional-instructions.md
 AGENTS.md
 CLAUDE.md
 CHANGELOG.md
+
+.agents/
+.claude/
+docs/
