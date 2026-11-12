@@ -65,10 +65,11 @@ body.nav-open{overflow:hidden}
 .dang-project-video{display:flex;flex-direction:column;align-items:center;width:100%;margin-left:auto;margin-right:auto}
 .dang-project-video video{display:block;width:100%;height:auto;background-color:#111319}
 .dang-project-video.is-portrait{max-width:min(100%,56rem)}
-.dang-project-row{display:flex;justify-content:center;align-items:flex-start;gap:clamp(.4rem,1vw,.9rem);width:100%}
+.dang-project-row{display:flex;justify-content:center;align-items:stretch;gap:clamp(.4rem,1vw,.9rem);width:100%}
 .dang-project-item{flex:1 1 0;min-width:0}
 .dang-project-item.is-single{flex:0 1 auto;width:100%}
 .dang-project-item img{display:block;width:100%;height:auto}
+.dang-project-item:not(.is-single) img{height:100%;object-fit:cover}
 .dang-project-back{position:fixed;top:2.4rem;left:2.4rem;z-index:202;display:inline-flex;align-items:center;color:#111319;background-color:#f3f2f0;border:.1rem solid #111319;border-radius:3rem;padding:.7rem 1.4rem;font-size:1.2rem;line-height:1;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color var(--dur-micro) var(--ease-enter), background-color var(--dur-micro) var(--ease-enter)}
 .dang-project-back:hover,.dang-project-back:focus-visible{background-color:#111319;color:#f3f2f0}
 .dang-project-footer{display:flex;align-items:center;flex-wrap:wrap;gap:1.6rem 2.4rem;margin-top:9rem;padding:5.6rem 3.8rem;background-color:#111319;color:#fff}

@@ -82,28 +82,34 @@ export function ProjectView({ project }: { project: Project }) {
 
               {rows.map(({ row, items }) => (
                 <div className="dang-project-row" key={row}>
-                  {items.map((item) => (
-                    <div
-                      className={`dang-project-item${
-                        items.length === 1 ? " is-single" : ""
-                      }`}
-                      key={item.src}
-                      style={
-                        items.length === 1
-                          ? { maxWidth: `${item.width}px` }
-                          : undefined
-                      }
-                    >
-                      <Image
-  src={withBasePath(item.src)}
-  alt={item.alt}
-  width={item.width}
-  height={item.height}
-  loading="lazy"
-  sizes={imageSizes(item, items.length)}
-/>
-                    </div>
-                  ))}
+                  {items.map((item) => {
+                    const aspectRatio = item.width / item.height;
+                    return (
+                      <div
+                        className={`dang-project-item${
+                          items.length === 1 ? " is-single" : ""
+                        }`}
+                        key={item.src}
+                        style={
+                          items.length === 1
+                            ? { maxWidth: `${item.width}px` }
+                            : {
+                                flex: `${aspectRatio} 1 0%`,
+                                aspectRatio: `${item.width} / ${item.height}`,
+                              }
+                        }
+                      >
+                        <Image
+                          src={withBasePath(item.src)}
+                          alt={item.alt}
+                          width={item.width}
+                          height={item.height}
+                          loading="lazy"
+                          sizes={imageSizes(item, items.length)}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               ))}
             </div>
@@ -116,7 +122,7 @@ export function ProjectView({ project }: { project: Project }) {
   alt="Dang (thd) logo"
 />
             <p className="dang-project-footer__copyright">
-              © 2026 Dang, Tran Huy Dang
+              2026 Tran Huy Dang
             </p>
             <Link className="dang-project-footer__link" href="/#contact">
               Contact
